@@ -5,7 +5,9 @@ module.exports = function(sequelize, DataTypes) {
         username: DataTypes.STRING,
         source: DataTypes.STRING,
         uid: DataTypes.STRING,
-        guid: DataTypes.STRING
+        guid: DataTypes.STRING,
+        cityID: DataTypes.INTEGER,
+        universityID: DataTypes.INTEGER
     });
 
     return User;

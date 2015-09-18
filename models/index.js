@@ -21,7 +21,10 @@ fs
   })
   .forEach(function(file) {
     if (file.slice(-3) !== '.js') return;
-    var model = sequelize['import'](path.join(__dirname, file));
+    var pp = path.join(__dirname, file);
+    //console.log("pp is " + pp);
+    var model = sequelize['import'](pp);
+    console.log('model.name is ' + model.name);
     db[model.name] = model;
   });
 
