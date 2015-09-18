@@ -9,8 +9,10 @@ module.exports = function (router) {
 
     router.post('/', function (req, res) {
         var uuid = req.body.uuid;
-        var resCityID = req.body.resCity;
-        var universityID = req.body.university;
+        var cityID = req.body.cityID;
+        var cityName = req.body.cityName;
+        var universityID = req.body.universityID;
+        var universityName = req.body.universityName;
         var userName = req.body.userName;
         var result = {success:true,info:''}
         if (uuid != undefined && uuid != null) {
@@ -29,16 +31,24 @@ module.exports = function (router) {
                         if (userName == undefined) {
                             userName = user.username;
                         }
-                        if (resCityID == undefined) {
-                            resCityID = user.cityID;
+                        if (cityID == undefined) {
+                            cityID = user.cityID;
+                        }
+                        if (cityName == undefined) {
+                            cityName = user.city
                         }
                         if (universityID == undefined) {
                             universityID = user.universityID;
                         }
+                        if (universityName == undefined) {
+                            universityName = user.universityName;
+                        }
                         user.updateAttributes({
                             username: userName,
-                            cityID: resCityID,
-                            universityID: universityID
+                            cityID: cityID,
+                            cityName: cityName,
+                            universityID: universityID,
+                            universityName: universityName
                         }).then(function(){
                             console.log('update succeed');
                             result.success = true;
