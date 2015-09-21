@@ -14,18 +14,18 @@ module.exports = function (router) {
         var universityID = req.body.universityID;
         var universityName = req.body.universityName;
         var userName = req.body.userName;
-        var result = {success:true,info:''}
+        var result = {success:true,data:''}
         if (uuid != undefined && uuid != null) {
             if (userName == undefined && resCityID == undefined && universityID == undefined) {
                 result.success = false;
-                result.info = 'invalid parameters';
+                result.data = 'invalid parameters';
                 res.send(result);
             } else {
                 var User = Model.User;
                 User.find({where:{guid:uuid}}).then(function(user){
                     if (user == null) {
                         result.success = false;
-                        result.info = 'user not exist';
+                        result.data = 'user not exist';
                         res.send(result);
                     } else {
                         if (userName == undefined) {
