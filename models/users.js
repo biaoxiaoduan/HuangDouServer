@@ -9,7 +9,10 @@ module.exports = function(sequelize, DataTypes) {
         cityID: DataTypes.INTEGER,
         universityID: DataTypes.INTEGER,
         cityName: DataTypes.STRING,
-        universityName: DataTypes.STRING
+        universityName: DataTypes.STRING,
+        countryID: DataTypes.INTEGER,
+        countryName: DataTypes.STRING,
+        gender: DataTypes.INTEGER
     });
 
     return User;
