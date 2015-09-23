@@ -26,6 +26,7 @@ module.exports = function (router) {
                 cityName:'undefined',
                 universityID:'undefined',
                 universityName:'undefined',
+                countryName: 'undefined',
                 gender:-1
             }
         };
