@@ -13,6 +13,7 @@ module.exports = function (router) {
             data:{
                 username:'undefined',
                 cityName:'undefined',
+                avatarID:'undefined',
                 universityID:'undefined',
                 universityName:'undefined',
                 countryID: 'undefined',
@@ -45,9 +46,10 @@ module.exports = function (router) {
                         result.data.universityID = user.universityID;
                     if (user.universityName != null)
                         result.data.universityName = user.universityName;
-                    if (user.gender != null) {
+                    if (user.gender != null)
                         result.data.gender = user.gender;
-                    }
+                    if (user.avatarID != null)
+                        result.data.avatarID = user.avatarID;
                     if (user.countryName != null)
                         result.data.countryName = user.countryName;
                     res.send(result);

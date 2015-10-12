@@ -18,6 +18,7 @@ module.exports = function (router) {
         var countryName = req.body.countryName;
         var userName = req.body.userName;
         var gender = req.body.gender;
+        var avatarID = req.body.avatarID;
         var result = {
             success:true, error:'',
             data:{
@@ -27,6 +28,7 @@ module.exports = function (router) {
                 universityID:'undefined',
                 universityName:'undefined',
                 countryName: 'undefined',
+                avatarID:'undefined',
                 gender:-1
             }
         };
@@ -68,6 +70,9 @@ module.exports = function (router) {
                         if (gender == undefined) {
                             gender = user.gender;
                         }
+                        if (avatarID == undefined) {
+                            avatarID = user.avatarID;
+                        }
                         user.updateAttributes({
                             username: userName,
                             cityID: cityID,
@@ -76,7 +81,8 @@ module.exports = function (router) {
                             universityName: universityName,
                             countryID: countryID,
                             countryName: countryName,
-                            gender: gender
+                            gender: gender,
+                            avatarID: avatarID
                         }).then(function(){
                             console.log('update succeed');
                             result.success = true;
@@ -94,6 +100,9 @@ module.exports = function (router) {
                                 result.data.universityName = user.universityName;
                             if (user.gender != null) {
                                 result.data.gender = user.gender;
+                            }
+                            if (user.avatarID != null) {
+                                result.data.avatarID = user.avatarID;
                             }
                             res.send(result);
                         }).error(function(){
