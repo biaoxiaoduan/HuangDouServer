@@ -19,6 +19,7 @@ module.exports = function (router) {
         var userName = req.body.userName;
         var gender = req.body.gender;
         var avatarID = req.body.avatarID;
+        var telNum = req.body.telNum;
         var result = {
             success:true, error:'',
             data:{
@@ -29,6 +30,7 @@ module.exports = function (router) {
                 universityName:'undefined',
                 countryName: 'undefined',
                 avatarID:'undefined',
+                telNum:'undefined',
                 gender:-1
             }
         };
@@ -73,6 +75,9 @@ module.exports = function (router) {
                         if (avatarID == undefined) {
                             avatarID = user.avatarID;
                         }
+                        if (telNum == undefined) {
+                            telNum = user.telNum;
+                        }
                         user.updateAttributes({
                             username: userName,
                             cityID: cityID,
@@ -82,7 +87,8 @@ module.exports = function (router) {
                             countryID: countryID,
                             countryName: countryName,
                             gender: gender,
-                            avatarID: avatarID
+                            avatarID: avatarID,
+                            telNum:telNum
                         }).then(function(){
                             console.log('update succeed');
                             result.success = true;
@@ -98,12 +104,12 @@ module.exports = function (router) {
                                 result.data.universityID = user.universityID;
                             if (user.universityName != null)
                                 result.data.universityName = user.universityName;
-                            if (user.gender != null) {
+                            if (user.gender != null)
                                 result.data.gender = user.gender;
-                            }
-                            if (user.avatarID != null) {
+                            if (user.avatarID != null)
                                 result.data.avatarID = user.avatarID;
-                            }
+                            if (user.telNum != null)
+                                result.data.telNum = user.telNum;
                             res.send(result);
                         }).error(function(){
                             console.log('update failed');

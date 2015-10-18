@@ -9,6 +9,14 @@ module.exports = function (router) {
 
     router.get('/', function (req, res) {
         var uuid = req.query.uuid;
+        var relationshipType = req.query.relationshipType;
+        if (relationshipType == 'following') {
+
+        } else if (relationshipType == 'follower') {
+
+        } else {
+
+        }
         var result = {success:true, error:'',
             data:{
                 username:'undefined',
@@ -18,6 +26,7 @@ module.exports = function (router) {
                 universityName:'undefined',
                 countryID: 'undefined',
                 countryName:'undefined',
+                telNum:'undefined',
                 gender:-1
             }
         };
@@ -52,6 +61,8 @@ module.exports = function (router) {
                         result.data.avatarID = user.avatarID;
                     if (user.countryName != null)
                         result.data.countryName = user.countryName;
+                    if (user.telNum != null)
+                        result.data.telNum = user.telNum;
                     res.send(result);
                 }
             }).error(function (err) {

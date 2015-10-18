@@ -13,7 +13,8 @@ module.exports = function(sequelize, DataTypes) {
         universityName: DataTypes.STRING,
         countryID: DataTypes.INTEGER,
         countryName: DataTypes.STRING,
-        gender: DataTypes.INTEGER
+        gender: DataTypes.INTEGER,
+        telNum: DataTypes.STRING
     });
 
     return User;
