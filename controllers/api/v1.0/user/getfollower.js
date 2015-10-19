@@ -11,7 +11,9 @@ var Model = require('../../../../models')
 module.exports = function (router) {
 
     router.get('/', function (req, res) {
+        console.log('get follower called');
         var uuid = req.query.uuid;
+        var needlist = req.query.needlist;
         //var mobileContactList = req.body.mobileContact;
         var result = {
             success: true, error: '', count:0, data:[]
@@ -28,8 +30,10 @@ module.exports = function (router) {
                 req.send(result);
             } else {
                 result.count = relationships.length;
-                for (var i = 0; i < result.count; i++) {
-                    result.data.push({'guid':relationships[i].member1});
+                if (needlist) {
+                    for (var i = 0; i < result.count; i++) {
+                        result.data.push(relationships[i].member1);
+                    }
                 }
                 result.success = true;
                 res.send(result);

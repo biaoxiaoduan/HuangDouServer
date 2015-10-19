@@ -12,6 +12,7 @@ module.exports = function (router) {
 
     router.get('/', function (req, res) {
         var uuid = req.query.uuid;
+        var needlist = req.query.needlist;
         //var mobileContactList = req.body.mobileContact;
         var result = {
             success: true, error: '', count:0, data:[]
@@ -28,8 +29,11 @@ module.exports = function (router) {
                 req.send(result);
             } else {
                 result.count = relationships.length;
-                for (var i = 0; i < result.count; i++) {
-                    result.data.push({'guid':relationships[i].member2});
+                console.log(relationships);
+                if (needlist) {
+                    for (var i = 0; i < result.count; i++) {
+                        result.data.push(relationships[i].member2);
+                    }
                 }
                 result.success = true;
                 res.send(result);

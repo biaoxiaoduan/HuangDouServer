@@ -14,7 +14,10 @@ module.exports = function (router) {
         var member2 = req.body.member2;
         var relationType = req.body.relationtype;
         var result = {
-            success: true, error: ''
+            success: true,
+            error: '',
+            member2: '',
+            isFollow: true
         };
         var RelationShip = Model.Relationship;
         RelationShip.find({
@@ -24,6 +27,7 @@ module.exports = function (router) {
             }
         }).then(function (re) {
             if (re == null && relationType == 'follow') {
+                console.log('follow');
                 var newRe = RelationShip.build({
                     member1: member1,
                     member2: member2,
@@ -31,18 +35,25 @@ module.exports = function (router) {
                 });
                 newRe.save().then(function onSuccess(shit) {
                     result.success = true;
+                    result.member2 = member2;
+                    result.isFollow = true;
                     res.send(result);
                 });
             } else if (re != null && relationType == 'unfollow'){
+                console.log('unfollow');
                 RelationShip.destroy({where:{member1 : member1, member2:member2}}).then(function(msg){
                     result.success = true;
+                    result.member2 = member2;
+                    result.isFollow = false;
                     res.send(result);
                 });
             } else {
+                console.log('other');
                 result.success = false;
                 res.send(result);
             }
         }).error(function(error){
+            console.log(error);
             result.success = false;
             res.send(result);
         });
