@@ -17,24 +17,25 @@ module.exports = function (router) {
             success: true, error: '',
             data: []
         };
-        var telArray = ['18611712493', '15210503191', '18618177787', '18600514081', '18801222804', '15120049755', '13320208080', '15120049755'];
+        var telArray = ['18611712493', '15210503191', '18618177787', '18600514081', '18801222804', '15120049755', '13320208080'];
         var User = Model.User;
         var RelationShip = Model.Relationship;
         User.all().then(function (users) {
             RelationShip.findAll({where: {member1: uuid}}).then(function (relations) {
                 for (var i = 0; i < users.length; i++) {
+                    var user = users[i];
                     for (var j = 0; j < telArray.length; j++) {
-                        if (telArray[j] == users[i].telNum && users[i].guid != uuid) {
+                        if (telArray[j] == user.telNum && user.guid != uuid) {
                             var exist = false;
                             for (var k = 0; k < relations.length; k++) {
-                                if (relations[k].member2 == users[i].guid) {
+                                console.log(relations[k].member2);
+                                if (relations[k].member2 == user.guid) {
                                     exist = true;
                                     break;
                                 }
                             }
                             if (!exist) {
-                                var item = {'uuid': users[i].guid, 'username': users[i].username};
-                                console.log(item);
+                                var item = {'uuid': user.guid, 'username': user.username};
                                 result.data.push(item);
                             }
                         }
