@@ -10,7 +10,7 @@ module.exports = function (router) {
     router.post('/', function (req, res) {
         console.log(req.body);
         //var mobileContactList = req.body.mobileContact;
-        var weibo = JSON.parse(req.body.weibo);
+        //var weibo = JSON.parse(req.body.weibo);
         var uuid = req.body.uuid;
         //console.log(weibo);
         var result = {
