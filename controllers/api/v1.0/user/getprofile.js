@@ -9,14 +9,6 @@ module.exports = function (router) {
 
     router.get('/', function (req, res) {
         var uuid = req.query.uuid;
-        var relationshipType = req.query.relationshipType;
-        if (relationshipType == 'following') {
-
-        } else if (relationshipType == 'follower') {
-
-        } else {
-
-        }
         var result = {success:true, error:'',
             data:{
                 username:'undefined',
