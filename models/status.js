@@ -8,7 +8,7 @@ module.exports = function(sequelize, DataTypes) {
         authorId: DataTypes.STRING,
         title: DataTypes.STRING,
         content: DataTypes.STRING,
-        images: DataTypes.STRING,
+        images: DataTypes.STRING(1024),
         tag: DataTypes.STRING,
         lat: DataTypes.FLOAT,
         long: DataTypes.FLOAT
