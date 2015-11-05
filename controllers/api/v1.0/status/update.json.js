@@ -16,7 +16,7 @@ module.exports = function (router) {
         var images = req.body.images;
         var tag = req.body.tag;
         console.log(req.body);
-        var result = {'success':true, errorInfo:''};
+        var result = {'success':true, errorInfo:'', statusid:0};
         // check content
         if (content == null) {
             result.success = false;
@@ -44,8 +44,9 @@ module.exports = function (router) {
                 newStatus.save().error(function(anotherTask) {
                     result.success = false;
                     res.send(result);
-                }).then(function onSuccess(shit) {
+                }).then(function onSuccess(item) {
                     result.success = true;
+                    result.statusid = item.id;
                     res.send(result);
                 });
             }

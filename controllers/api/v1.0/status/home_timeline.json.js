@@ -62,6 +62,7 @@ module.exports = function (router) {
                         }
                         if (hasuuid) {
                             var item = {
+                                statusId: status.id,
                                 authorId: status.authorId,
                                 title: status.title,
                                 content: status.content,
@@ -103,6 +104,7 @@ module.exports = function (router) {
                             }
                             if (hasuuid) {
                                 var item = {
+                                    statusId: status.id,
                                     authorId: status.authorId,
                                     title: status.title,
                                     content: status.content,
