@@ -70,10 +70,10 @@
 
     },
   "development": {
-    "username": "root",
+    "username": "yanbiao",
     "password": "dyb123",
     "database": "huangdou",
-    "host": "127.0.0.1",
+    "host": "rdsz6n6yd92762lr0221o.mysql.rds.aliyuncs.com",
     "dialect": "mysql"
   },
   "test": {
