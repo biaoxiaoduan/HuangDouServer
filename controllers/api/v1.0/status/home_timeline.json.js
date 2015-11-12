@@ -88,7 +88,7 @@ module.exports = function (router) {
                                 id:{gte:since_id}
                             },
                         limit: count,
-                        order: 'id ASC'
+                        order: 'id DESC'
                     }).then(function(statuses){
                         console.log(statuses.length);
 
