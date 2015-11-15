@@ -24,7 +24,8 @@ module.exports = function (router) {
             }
         }).then(function (user) {
             if (user == null) {
-                var content = telNum + password;
+                var myDate = new Date();
+                var content = telNum + myDate.getMilliseconds();
                 var md5 = crypto.createHash('md5');
                 md5.update(content);
                 var uuid = md5.digest('hex');

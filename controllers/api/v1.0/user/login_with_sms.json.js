@@ -16,7 +16,8 @@ module.exports = function (router) {
         User.find({
             where: {
                 telNum: telNum,
-                password: password
+                password: password,
+                source: 'sms'
             }
         }).then(function (user) {
             console.log("find success");
