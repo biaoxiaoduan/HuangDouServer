@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define("User", {
         username: DataTypes.STRING,
         source: DataTypes.STRING,
-        uid: DataTypes.STRING,
+        uid: DataTypes.STRING, // password for sms user
         guid: DataTypes.STRING,
         avatarID: DataTypes.STRING,
         cityID: DataTypes.INTEGER,
@@ -14,7 +14,10 @@ module.exports = function(sequelize, DataTypes) {
         countryID: DataTypes.INTEGER,
         countryName: DataTypes.STRING,
         gender: DataTypes.INTEGER,
-        telNum: DataTypes.STRING
+        telNum: DataTypes.STRING,
+        interest: DataTypes.STRING,
+        password: DataTypes.STRING,
+        role: DataTypes.INTEGER
     });
 
     return User;

@@ -57,6 +57,7 @@ module.exports = function (router) {
                     res.send(result);
                 }
             });
+        } else if (method == 'sms') {
         }
     });
 };
