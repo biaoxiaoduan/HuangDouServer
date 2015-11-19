@@ -9,7 +9,10 @@ module.exports = function (router) {
         var telNum = req.query.telNum;
         var result = {
             success: true,
-            existing: false
+            errorCode: 0,
+            data: {
+                code: ''
+            }
         };
         var User = Model.User;
         User.find({
@@ -19,16 +22,18 @@ module.exports = function (router) {
         }).then(function (user ) {
             if (user == null) {
                 result.success = true;
+                result.data.code = '1234';
+                result.errorCode = 1;
                 res.send(result);
             } else {
                 result.success = false;
-                result.existing = true;
+                result.data.existing = true;
                 res.send(result);
             }
         }).error(function (error) {
             console.log(error);
             result.success = false;
-            result.existing = false;
+            result.errorCode = -1;
             res.send(result);
         });
     });

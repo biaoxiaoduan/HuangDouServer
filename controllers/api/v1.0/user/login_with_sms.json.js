@@ -10,8 +10,10 @@ module.exports = function (router) {
         var User = Model.User;
         var result = {
             success: true,
-            uuid: '',
-            errorCode: 0
+            errorCode: 0,
+            data: {
+                uuid: ''
+            }
         };
         User.find({
             where: {
@@ -26,7 +28,7 @@ module.exports = function (router) {
                 result.success = false;
                 result.errorCode = 1;
             } else {
-                result.uuid = user.guid;
+                result.data.uuid = user.guid;
                 result.success = true;
             }
             res.send(result);

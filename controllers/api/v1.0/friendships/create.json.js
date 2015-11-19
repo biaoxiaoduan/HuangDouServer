@@ -1,5 +1,5 @@
 /**
- * Created by yanbiao on 10/18/15.
+ * Created by yanbiao on 11/19/15.
  */
 'use strict';
 
@@ -9,10 +9,8 @@ module.exports = function (router) {
 
     router.post('/', function (req, res) {
         console.log(req.body);
-        //var mobileContactList = req.body.mobileContact;
         var member1 = req.body.member1;
         var member2 = req.body.member2;
-        var relationType = req.body.relationtype;
         var result = {
             success: true,
             errorCode: 0,
@@ -28,25 +26,16 @@ module.exports = function (router) {
                 member2: member2
             }
         }).then(function (re) {
-            if (re == null && relationType == 'follow') {
-                console.log('follow');
+            if (re == null) {
                 var newRe = RelationShip.build({
                     member1: member1,
                     member2: member2,
-                    relation: relationType
+                    relation: 'follow'
                 });
                 newRe.save().then(function onSuccess(shit) {
                     result.success = true;
                     result.data.member2 = member2;
                     result.data.isFollow = true;
-                    res.send(result);
-                });
-            } else if (re != null && relationType == 'unfollow'){
-                console.log('unfollow');
-                RelationShip.destroy({where:{member1 : member1, member2:member2}}).then(function(msg){
-                    result.success = true;
-                    result.data.member2 = member2;
-                    result.data.isFollow = false;
                     res.send(result);
                 });
             } else {

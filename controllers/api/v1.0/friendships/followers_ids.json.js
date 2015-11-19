@@ -1,8 +1,5 @@
 /**
- * Created by yanbiao on 10/18/15.
- */
-/**
- * Created by yanbiao on 10/18/15.
+ * Created by yanbiao on 11/19/15.
  */
 'use strict';
 
@@ -11,9 +8,8 @@ var Model = require('../../../../models')
 module.exports = function (router) {
 
     router.get('/', function (req, res) {
+        console.log('get follower called');
         var uuid = req.query.uuid;
-        var needlist = req.query.needlist;
-        //var mobileContactList = req.body.mobileContact;
         var result = {
             success: true,
             errorCode: 0,
@@ -25,7 +21,7 @@ module.exports = function (router) {
         var RelationShip = Model.Relationship;
         RelationShip.findAll({
             where: {
-                member1: uuid
+                member2: uuid
             }
         }).then(function (relationships) {
             if (relationships == null) {
@@ -34,11 +30,8 @@ module.exports = function (router) {
                 req.send(result);
             } else {
                 result.count = relationships.length;
-                console.log(relationships);
-                if (needlist) {
-                    for (var i = 0; i < result.count; i++) {
-                        result.data.list.push(relationships[i].member2);
-                    }
+                for (var i = 0; i < result.count; i++) {
+                    result.data.list.push(relationships[i].member1);
                 }
                 result.success = true;
                 res.send(result);

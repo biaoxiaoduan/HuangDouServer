@@ -9,11 +9,17 @@ module.exports = function (router) {
 
     router.get('/', function (req, res) {
         var uuid = req.query.uuid;
-        var result = {success:true, error:'', uuid:uuid, username:'undefined'
+        var result = {
+            success:true,
+            errorCode: 0,
+            data: {
+                uuid: uuid,
+                username: ''
+            }
         };
         if (uuid == undefined) {
             result.success = false;
-            result.error = 'invalid param';
+            result.errorCode = 1;
             res.send(result);
         } else {
             var User = Model.User;
@@ -21,13 +27,13 @@ module.exports = function (router) {
                 if (user == null) {
                     console.log('user not exist');git
                     result.success = false;
-                    result.error = 'user not exist';
+                    result.errorCode = 2;
                     res.send(result);
                 } else {
                     console.log('user found');
                     result.success = true;
                     if (user.username != null)
-                        result.username = user.username;
+                        result.data.username = user.username;
                     res.send(result);
                 }
             }).error(function (err) {

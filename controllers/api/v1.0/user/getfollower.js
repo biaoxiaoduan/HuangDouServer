@@ -16,7 +16,12 @@ module.exports = function (router) {
         var needlist = req.query.needlist;
         //var mobileContactList = req.body.mobileContact;
         var result = {
-            success: true, error: '', count:0, data:[]
+            success: true,
+            errorCode: 0,
+            data: {
+                count: 0,
+                list: []
+            }
         };
         var RelationShip = Model.Relationship;
         RelationShip.findAll({
@@ -26,13 +31,13 @@ module.exports = function (router) {
         }).then(function (relationships) {
             if (relationships == null) {
                 result.success = true;
-                result.count = 0;
+                result.data.count = 0;
                 req.send(result);
             } else {
                 result.count = relationships.length;
                 if (needlist) {
                     for (var i = 0; i < result.count; i++) {
-                        result.data.push(relationships[i].member1);
+                        result.data.list.push(relationships[i].member1);
                     }
                 }
                 result.success = true;

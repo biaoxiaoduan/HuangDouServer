@@ -1,8 +1,5 @@
 /**
- * Created by yanbiao on 10/18/15.
- */
-/**
- * Created by yanbiao on 10/18/15.
+ * Created by yanbiao on 11/19/15.
  */
 'use strict';
 
@@ -12,8 +9,6 @@ module.exports = function (router) {
 
     router.get('/', function (req, res) {
         var uuid = req.query.uuid;
-        var needlist = req.query.needlist;
-        //var mobileContactList = req.body.mobileContact;
         var result = {
             success: true,
             errorCode: 0,
@@ -35,10 +30,8 @@ module.exports = function (router) {
             } else {
                 result.count = relationships.length;
                 console.log(relationships);
-                if (needlist) {
-                    for (var i = 0; i < result.count; i++) {
-                        result.data.list.push(relationships[i].member2);
-                    }
+                for (var i = 0; i < result.count; i++) {
+                    result.data.list.push(relationships[i].member2);
                 }
                 result.success = true;
                 res.send(result);

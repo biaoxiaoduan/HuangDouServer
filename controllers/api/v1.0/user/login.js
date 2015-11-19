@@ -30,6 +30,7 @@ module.exports = function (router) {
             };
             var result = {
                 success: 'false',
+                errorCode: 0,
                 data: params
             }
             // check if the user exist
