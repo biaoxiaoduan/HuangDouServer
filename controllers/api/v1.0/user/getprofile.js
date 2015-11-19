@@ -19,6 +19,8 @@ module.exports = function (router) {
                 countryID: 'undefined',
                 countryName:'undefined',
                 telNum:'undefined',
+                interest: 'undefined',
+                role: 'undefined',
                 gender:-1
             }
         };
@@ -55,6 +57,10 @@ module.exports = function (router) {
                         result.data.countryName = user.countryName;
                     if (user.telNum != null)
                         result.data.telNum = user.telNum;
+                    if (user.interest != null)
+                        result.data.interest = user.interest;
+                    if (user.role != null)
+                        result.data.role = user.role;
                     res.send(result);
                 }
             }).error(function (err) {

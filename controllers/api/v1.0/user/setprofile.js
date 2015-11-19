@@ -20,6 +20,8 @@ module.exports = function (router) {
         var gender = req.body.gender;
         var avatarID = req.body.avatarID;
         var telNum = req.body.telNum;
+        var interest = req.body.interest;
+        var role = req.body.role;
         var result = {
             success:true, error:'',
             data:{
@@ -31,6 +33,8 @@ module.exports = function (router) {
                 countryName: 'undefined',
                 avatarID:'undefined',
                 telNum:'undefined',
+                interest: 'undefined',
+                role: 'undefined',
                 gender:-1
             }
         };
@@ -78,6 +82,12 @@ module.exports = function (router) {
                         if (telNum == undefined) {
                             telNum = user.telNum;
                         }
+                        if (interest == undefined) {
+                            interest = user.interest;
+                        }
+                        if (role == undefined) {
+                            role = user.role;
+                        }
                         user.updateAttributes({
                             username: userName,
                             cityID: cityID,
@@ -88,7 +98,9 @@ module.exports = function (router) {
                             countryName: countryName,
                             gender: gender,
                             avatarID: avatarID,
-                            telNum:telNum
+                            telNum:telNum,
+                            interest:interest,
+                            role:role
                         }).then(function(){
                             console.log('update succeed');
                             result.success = true;
@@ -110,6 +122,10 @@ module.exports = function (router) {
                                 result.data.avatarID = user.avatarID;
                             if (user.telNum != null)
                                 result.data.telNum = user.telNum;
+                            if (user.interest != null)
+                                result.data.interest = user.interest;
+                            if (user.role != null)
+                                result.data.role = user.role;
                             res.send(result);
                         }).error(function(){
                             console.log('update failed');
