@@ -16,7 +16,7 @@ module.exports = function (router) {
         var count = req.query.count;
         var result = {
             success: true,
-            error: '',
+            errorCode: 0,
             data:{
                 statuses:[]
             }
@@ -24,7 +24,7 @@ module.exports = function (router) {
         var Status = Model.Status;
         if (uuid == null) {
             result.success = false;
-            result.error = 'invalid params';
+            result.errorCode = -1;
             res.send(result);
             return;
         }
@@ -123,7 +123,7 @@ module.exports = function (router) {
                     });
                 } else {
                     result.success = false;
-                    result.error = 'invalid params';
+                    result.errorCode = -1;
                     res.send(result);
                 }
             }

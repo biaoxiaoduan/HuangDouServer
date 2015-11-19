@@ -10,13 +10,13 @@ module.exports = function (router) {
         var statusId = req.query.statusId;
         var result = {
             success: true,
-            error: '',
+            errorCode: 0,
             data: {}
         };
         var Status = Model.Status;
         if (statusId == null) {
             result.success = false;
-            result.error = 'invalid params';
+            result.errorCode = -1;
             res.send(result);
             return;
         }
@@ -25,19 +25,19 @@ module.exports = function (router) {
                 id: statusId
             }
         }).then(function (status) {
-            result.statusId = status.id;
-            result.authorId = status.authorId;
-            result.title = status.title;
-            result.content = status.content;
-            result.images = status.images;
-            result.tag = status.tag;
-            result.lat = status.lat;
-            result.long = status.long;
+            result.data.statusId = status.id;
+            result.data.authorId = status.authorId;
+            result.data.title = status.title;
+            result.data.content = status.content;
+            result.data.images = status.images;
+            result.data.tag = status.tag;
+            result.data.lat = status.lat;
+            result.data.long = status.long;
             result.success = true;
             res.send(result);
         }).error(function (err) {
             result.success = false;
-            result.error = err;
+            result.errorCode = -2;
             res.send(result);
         });
     });

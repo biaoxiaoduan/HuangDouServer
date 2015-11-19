@@ -13,12 +13,14 @@ module.exports = function (router) {
         var statusId = req.query.statusId;
         var result = {
             success:true,
-            error: '',
-            deletedId: 0
+            errorCode: 0,
+            data: {
+                deletedId: 0
+            }
         };
         if (statusId == null || statusId == undefined) {
             result.success = false;
-            result.error = 'invalid params';
+            result.errorCode = -1;
             res.send(result);
             return;
         }
@@ -28,8 +30,8 @@ module.exports = function (router) {
             res.send(result);
         }).error(function(err){
             result.success = false;
-            result.deletedId = statusId;
-            result.error = err;
+            result.data.deletedId = statusId;
+            result.errorCode = -2;
             res.send(result);
         });
     });

@@ -16,11 +16,17 @@ module.exports = function (router) {
         var images = req.body.images;
         var tag = req.body.tag;
         console.log(req.body);
-        var result = {'success':true, errorInfo:'', statusid:0};
+        var result = {
+            success: true,
+            errorCode: 0,
+            data : {
+                statusid: 0
+            }
+        };
         // check content
         if (content == null) {
             result.success = false;
-            result.errorInfo = 'empty content';
+            result.errorCode = -1;
             res.send(result);
         }
         // check author
@@ -28,7 +34,7 @@ module.exports = function (router) {
         User.find({where: {guid: author}}).then(function (user) {
             if (user == null) {
                 result.success = false;
-                result.errorInfo = 'user not found';
+                result.errorCode = -2;
                 res.send(result);
             } else {
                 var Status = Model.Status;
@@ -46,13 +52,13 @@ module.exports = function (router) {
                     res.send(result);
                 }).then(function onSuccess(item) {
                     result.success = true;
-                    result.statusid = item.id;
+                    result.data.statusid = item.id;
                     res.send(result);
                 });
             }
         }).error(function (err) {
             result.success = false;
-            result.errorInfo = 'user not found';
+            result.errorCode = -2;
             res.send(result);
         });
     });

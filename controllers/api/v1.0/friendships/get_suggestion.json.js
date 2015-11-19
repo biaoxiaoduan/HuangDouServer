@@ -13,7 +13,7 @@ module.exports = function (router) {
         //console.log(weibo);
         var result = {
             success: true,
-            errorCode: '',
+            errorCode: 0,
             data: {
                 list: []
             }

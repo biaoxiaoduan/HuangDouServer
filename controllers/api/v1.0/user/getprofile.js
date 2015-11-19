@@ -9,7 +9,9 @@ module.exports = function (router) {
 
     router.get('/', function (req, res) {
         var uuid = req.query.uuid;
-        var result = {success:true, error:'',
+        var result = {
+            success:true,
+            errorCode: 0,
             data:{
                 username:'undefined',
                 cityName:'undefined',
@@ -26,7 +28,7 @@ module.exports = function (router) {
         };
         if (uuid == undefined) {
             result.success = false;
-            result.error = 'invalid param';
+            result.errorCode = -1;
             res.send(result);
         } else {
             var User = Model.User;
@@ -34,7 +36,7 @@ module.exports = function (router) {
                 if (user == null) {
                     console.log('user not exist');
                     result.success = false;
-                    result.error = 'user not exist';
+                    result.errorCode = -2;
                     res.send(result);
                 } else {
                     console.log('user found');
