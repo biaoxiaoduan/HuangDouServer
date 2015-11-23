@@ -4,20 +4,22 @@ module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define("User", {
         username: DataTypes.STRING,
         source: DataTypes.STRING,
-        uid: DataTypes.STRING, // password for sms user
+        weiboId: DataTypes.STRING,
+        wechatId: DataTypes.STRING,
+        qqId: DataTypes.STRING,
         guid: DataTypes.STRING,
-        avatarID: DataTypes.STRING,
-        cityID: DataTypes.INTEGER,
-        universityID: DataTypes.INTEGER,
+        avatarMD5: DataTypes.STRING,
         cityName: DataTypes.STRING,
         universityName: DataTypes.STRING,
-        countryID: DataTypes.INTEGER,
         countryName: DataTypes.STRING,
-        gender: DataTypes.INTEGER,
+        highSchoolName: DataTypes.STRING,
+        gender: DataTypes.STRING,
         telNum: DataTypes.STRING,
         interest: DataTypes.STRING,
         password: DataTypes.STRING,
-        role: DataTypes.INTEGER
+        role: DataTypes.INTEGER,
+        following: DataTypes.INTEGER,
+        follower: DataTypes.INTEGER
     });
 
     return User;
