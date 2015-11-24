@@ -27,7 +27,7 @@ module.exports = function (router) {
         if (count == undefined || count > 200) {
             count = 200;
         }
-        if (since_id == NaN && max_id == NaN) {
+        if (since_id == 0 && max_id == 0) {
             condition.where = {
                 member2: uuid,
                 relationshipID: {
@@ -37,7 +37,7 @@ module.exports = function (router) {
             condition.limit = count;
             condition.order = 'relationshipID DESC';
         } else {
-            if (since_id != NaN) {
+            if (since_id != 0) {
                 condition.where = {
                     member2: uuid,
                     relationshipID: {
@@ -65,6 +65,9 @@ module.exports = function (router) {
             if (relationships == null || relationships.length == 0) {
                 result.success = true;
                 result.data.count = 0;
+                result.data.max_id = 0;
+                result.data.min_id = 0;
+                console.log(result);
                 res.send(result);
             } else {
                 result.data.count = relationships.length;

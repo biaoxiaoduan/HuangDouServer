@@ -1,17 +1,20 @@
 /**
  * Created by yanbiao on 11/19/15.
  */
+'use strict';
+
 var Model = require('../../../../models')
 var async = require('async')
 
 module.exports = function (router) {
 
     router.get('/', function (req, res) {
-        //console.log(req.body);
-        //var mobileContactList = req.body.mobileContact;
-        //var weibo = JSON.parse(req.body.weibo);
+        console.log('get follower called');
         var uuid = req.query.uuid;
-        //console.log(weibo);
+        var since_id = parseInt(req.query.since_id);
+        var max_id = parseInt(req.query.max_id);
+        var count = req.query.count;
+
         var result = {
             success: true,
             errorCode: 0,
@@ -20,17 +23,72 @@ module.exports = function (router) {
                 list: []
             }
         };
-        var telArray = ['18611712493', '15210503191', '18618177787', '18600514081', '18801222804', '15120049755', '13320208080'];
+        var condition = {};
+        if (count == undefined || count > 200) {
+            count = 200;
+        }
+        if (since_id == 0 && max_id == 0) {
+            condition.where = {
+                member1: uuid,
+                relationshipID: {
+                    gte: 0
+                }
+            };
+            condition.limit = count;
+            condition.order = 'relationshipID DESC';
+        } else {
+            if (since_id != 0) {
+                condition.where = {
+                    member1: uuid,
+                    relationshipID: {
+                        gte: since_id
+                    },
+                };
+                condition.limit = count;
+                condition.order = 'relationshipID ASC';
+            } else {
+                condition.where = {
+                    member1: uuid,
+                    relationshipID: {
+                        lte: max_id
+                    }
+                };
+                condition.limit = count;
+                condition.order = 'relationshipID DESC';
+            }
+        }
+
+        console.log(condition);
+        var RelationShip = Model.Relationship;
         var User = Model.User;
-        User.all().then(function (users) {
-            if (users == null || users.length == 0) {
-                result.data.count = 0;
+        RelationShip.findAll(condition).then(function (relationships) {
+            if (relationships == null || relationships.length == 0) {
                 result.success = true;
+                result.data.count = 0;
+                result.data.max_id = 0;
+                result.data.min_id = 0;
+                console.log(result);
                 res.send(result);
             } else {
-                async.eachSeries(users, function(user, callback){
-                    for (var i = 0; i < telArray.length; i++) {
-                        if (telArray[i] == user.telNum) {
+                result.data.count = relationships.length;
+                if (condition.order == 'relationshipID DESC') {
+                    result.data.min_id = relationships[relationships.length - 1].relationshipID;
+                    result.data.max_id = relationships[0].relationshipID;
+                } else {
+                    result.data.max_id = relationships[relationships.length - 1].relationshipID;
+                    result.data.min_id = relationships[0].relationshipID;
+                }
+                async.eachSeries(relationships, function(relation, callback){
+                    var uuid = relation.member1;
+                    User.find(
+                        {
+                            where: {
+                                guid: uuid
+                            }
+                        }).then(function (user) {
+                        if (user == null) {
+                            callback('user not exist');
+                        } else {
                             var item = {};
                             item.uuid = user.guid;
                             if (user.username != null)
@@ -65,20 +123,22 @@ module.exports = function (router) {
                             item.following = user.following;
                             result.data.list.push(item);
                             callback();
-                            return;
                         }
-                    }
-                    callback();
+                    }).error(function (err) {
+                        callback(err)
+                    });
                 }, function(err){
                     if (err == undefined) {
                         result.success = true;
-                        result.data.count = result.data.list.length;
                     } else {
                         result.success = false;
                     }
                     res.send(result);
                 });
             }
+        }).error(function(error){
+            result.success = false;
+            res.send(result);
         });
     });
 };
