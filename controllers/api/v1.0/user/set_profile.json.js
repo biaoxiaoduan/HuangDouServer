@@ -20,8 +20,8 @@ module.exports = function (router) {
         var interest = req.body.interest;
         var role = req.body.role;
         var result = {
-            success:true,
-            error:'',
+            success: true,
+            errorCode: 0,
             data:{
             }
         };
@@ -35,7 +35,7 @@ module.exports = function (router) {
             }).then(function(user){
                 if (user == null) {
                     result.success = false;
-                    result.error = 'user not exist';
+                    result.errorCode = 1;
                     res.send(result);
                 } else {
                     if (cityName == undefined) {
@@ -93,7 +93,7 @@ module.exports = function (router) {
                         if (user.interest != null)
                             result.data.interest = user.interest;
                         if (user.role != null)
-                            result.data.role = user.role;
+                            result.data.role = parseInt(user.role);
                         if (user.highSchoolName != null)
                             result.data.highSchoolName = user.highSchoolName;
                         result.data.follower = user.follower;
