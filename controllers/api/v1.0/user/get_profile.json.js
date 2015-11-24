@@ -35,8 +35,17 @@ module.exports = function (router) {
                 } else {
                     console.log('user found');
                     result.success = true;
+                    result.data.uuid = user.guid;
                     if (user.username != null)
-                        result.data.username = user.username;
+                        result.data.userName = user.username;
+                    if (user.source != null)
+                        result.data.source = user.source;
+                    if (user.weiboId != null)
+                        result.data.weiboId = user.weiboId;
+                    if (user.wechatId != null)
+                        result.data.wechatId = user.wechatId;
+                    if (user.qqId != null)
+                        result.data.qqId = user.qqId;
                     if (user.cityName != null)
                         result.data.cityName = user.cityName;
                     if (user.universityName != null)
