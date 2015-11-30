@@ -24,19 +24,38 @@ module.exports = function (router) {
             res.send(result);
             return;
         }
-        Status.destroy({where:{id : statusId}}).then(function(msg){
-            var statusCount = user.statusCount-1;
-            user.updateAttributes({
-                statusCount: statusCount
+        Status.find({
+            where:{
+                id : statusId
+            }
+        }).then(function(status){
+            var User = Model.User;
+            User.find({
+                where: {
+                    id: status.authorId
+                }
+            }).then(function(user){
+                var statusCount = user.statusCount-1;
+                user.updateAttributes({
+                    statusCount: statusCount
+                });
+                Status.destroy({where:{id : statusId}}).then(function(msg){
+                    result.success = true;
+                    result.deletedId = statusId;
+                    res.send(result);
+                }).error(function(err){
+                    result.success = false;
+                    result.data.deletedId = statusId;
+                    result.errorCode = -2;
+                    res.send(result);
+                });
             });
-            result.success = true;
-            result.deletedId = statusId;
-            res.send(result);
         }).error(function(err){
             result.success = false;
             result.data.deletedId = statusId;
             result.errorCode = -2;
             res.send(result);
         });
+
     });
 }
