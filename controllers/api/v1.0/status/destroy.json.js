@@ -25,6 +25,10 @@ module.exports = function (router) {
             return;
         }
         Status.destroy({where:{id : statusId}}).then(function(msg){
+            var statusCount = user.statusCount-1;
+            user.updateAttributes({
+                statusCount: statusCount
+            });
             result.success = true;
             result.deletedId = statusId;
             res.send(result);

@@ -31,7 +31,11 @@ module.exports = function (router) {
         }
         // check author
         var User = Model.User;
-        User.find({where: {guid: author}}).then(function (user) {
+        User.find({
+            where: {
+                guid: author
+            }
+            }).then(function (user) {
             if (user == null) {
                 result.success = false;
                 result.errorCode = -2;
@@ -51,6 +55,10 @@ module.exports = function (router) {
                     result.success = false;
                     res.send(result);
                 }).then(function onSuccess(item) {
+                    var statusCount = user.statusCount+1;
+                    user.updateAttributes({
+                        statusCount: statusCount
+                    });
                     result.success = true;
                     result.data.statusid = item.id;
                     res.send(result);

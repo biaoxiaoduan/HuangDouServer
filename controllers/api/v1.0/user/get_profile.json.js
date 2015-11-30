@@ -66,6 +66,7 @@ module.exports = function (router) {
                         result.data.highSchoolName = user.highSchoolName;
                     result.data.follower = user.follower;
                     result.data.following = user.following;
+                    result.data.statusCount = user.statusCount;
                     res.send(result);
                 }
             }).error(function (err) {

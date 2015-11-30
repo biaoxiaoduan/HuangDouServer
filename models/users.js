@@ -19,7 +19,8 @@ module.exports = function(sequelize, DataTypes) {
         password: DataTypes.STRING,
         role: DataTypes.INTEGER,
         following: DataTypes.INTEGER,
-        follower: DataTypes.INTEGER
+        follower: DataTypes.INTEGER,
+        statusCount: DataTypes.INTEGER
     });
 
     return User;
