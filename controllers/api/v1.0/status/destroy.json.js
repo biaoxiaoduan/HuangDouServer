@@ -32,7 +32,7 @@ module.exports = function (router) {
             var User = Model.User;
             User.find({
                 where: {
-                    id: status.authorId
+                    guid: status.authorId
                 }
             }).then(function(user){
                 var statusCount = user.statusCount-1;
