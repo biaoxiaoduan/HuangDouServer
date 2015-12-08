@@ -79,7 +79,7 @@ module.exports = function (router) {
                     result.data.min_id = relationships[0].relationshipID;
                 }
                 async.eachSeries(relationships, function(relation, callback){
-                    var uuid = relation.member1;
+                    var uuid = relation.member2;
                     User.find(
                         {
                             where: {
