@@ -20,7 +20,9 @@ module.exports = function(sequelize, DataTypes) {
         role: DataTypes.INTEGER,
         following: DataTypes.INTEGER,
         follower: DataTypes.INTEGER,
-        statusCount: DataTypes.INTEGER
+        statusCount: DataTypes.INTEGER,
+        numLike: DataTypes.INTEGER,
+        numUseful: DataTypes.INTEGER
     });
 
     return User;

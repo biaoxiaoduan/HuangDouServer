@@ -20,6 +20,7 @@ module.exports = function (router) {
             }
         };
         var RelationShip = Model.Relationship;
+        var User = Model.User;
         RelationShip.find({
             where: {
                 member1: member1,
@@ -36,6 +37,28 @@ module.exports = function (router) {
                     result.success = true;
                     result.data.member2 = member2;
                     result.data.isFollow = true;
+                    User.find({
+                        where:{
+                            guid: member1
+                        }
+                    }).then(function(user1){
+                       if (user1 != null) {
+                           user1.updateAttributes({
+                               following: user1.following+1
+                           });
+                       }
+                    });
+                    User.find({
+                        where:{
+                            guid: member2
+                        }
+                    }).then(function(user2){
+                        if (user2 != null) {
+                            user2.updateAttributes({
+                                follower: user2.follower+1
+                            });
+                        }
+                    });
                     res.send(result);
                 });
             } else {

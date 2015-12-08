@@ -67,6 +67,8 @@ module.exports = function (router) {
                     result.data.follower = user.follower;
                     result.data.following = user.following;
                     result.data.statusCount = user.statusCount;
+                    result.data.numLike = user.numLike;
+                    result.data.numUseful = user.numUseful;
                     res.send(result);
                 }
             }).error(function (err) {

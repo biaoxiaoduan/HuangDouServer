@@ -5,6 +5,8 @@
 module.exports = function(sequelize, DataTypes) {
     var Status = sequelize.define("Status", {
         id: {type:DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
+        type: DataTypes.STRING,//{"normal", "experience", "news"}
+        numLike: DataTypes.INTEGER,
         authorId: DataTypes.STRING,
         title: DataTypes.STRING,
         content: DataTypes.STRING,
