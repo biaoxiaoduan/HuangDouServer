@@ -12,7 +12,7 @@ module.exports = function (router) {
         var searchKey = req.body.searchKey;
         searchKey = searchKey.toLowerCase();
         var count = req.body.count;
-        var City = Model.City;
+        var University = Model.University;
         var result = {
             success: true,
             errorCode: 0,
@@ -23,15 +23,15 @@ module.exports = function (router) {
         cache.connect(6379).configure({
             expiry: 86400
         });
-        cache.fetch('cityList').otherwise(function(deferred, cacheKey) {
-            City.findAll().then(function (cities) {
-                var cityList = {list:[]};
-                for (var i = 0; i < cities.length; i++) {
-                    var city = cities[i];
-                    var item = {'id': city.cityID, 'name': city.cityName};
-                    cityList.list.push(item);
+        cache.fetch('universityList').otherwise(function(deferred, cacheKey) {
+            University.findAll().then(function (universities) {
+                var universityList = {list:[]};
+                for (var i = 0; i < universities.length; i++) {
+                    var university = universities[i];
+                    var item = {'id': university.universityID, 'name': university.universityName};
+                    universityList.list.push(item);
                 }
-                deferred.resolve(cityList);
+                deferred.resolve(universityList);
             }).error(function (err) {
                 result.success = false;
             });
@@ -47,7 +47,7 @@ module.exports = function (router) {
                     result.data.count += 1;
                 }
                 if (result.data.count == count) {
-                break;
+                    break;
                 }
             }
             res.send(result);
