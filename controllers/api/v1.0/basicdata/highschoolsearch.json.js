@@ -12,7 +12,7 @@ module.exports = function (router) {
         var searchKey = req.body.searchKey;
         searchKey = searchKey.toLowerCase();
         var count = req.body.count;
-        var City = Model.City;
+        var Highschool = Model.Highschool;
         var result = {
             success: true,
             errorCode: 0,
@@ -23,15 +23,15 @@ module.exports = function (router) {
         cache.connect(6379).configure({
             expiry: 86400
         });
-        cache.fetch('cityList').otherwise(function(deferred, cacheKey) {
-            City.findAll().then(function (cities) {
-                var cityList = {list:[]};
-                for (var i = 0; i < cities.length; i++) {
-                    var city = cities[i];
-                    var item = {'id': city.cityID, 'name': city.cityName};
-                    cityList.list.push(item);
+        cache.fetch('highschoolList').otherwise(function(deferred, cacheKey) {
+            Highschool.findAll().then(function (schools) {
+                var schoolList = {list:[]};
+                for (var i = 0; i < schools.length; i++) {
+                    var school = schools[i];
+                    var item = {'id': school.highschoolID, 'name': school.highschoolName};
+                    schoolList.list.push(item);
                 }
-                deferred.resolve(cityList);
+                deferred.resolve(schoolList);
             }).error(function (err) {
                 result.success = false;
             });
@@ -43,12 +43,12 @@ module.exports = function (router) {
             for (var i = 0; i < models.list.length; i++) {
                 var name = models.list[i].name.toLowerCase();
                 var index = name.indexOf(searchKey);
-                if (index == 0) {
+                if (index==0) {
                     result.data.list.push({id: models.list[i].id, name: models.list[i].name});
                     result.data.count += 1;
                 }
                 if (result.data.count == count) {
-                break;
+                    break;
                 }
             }
             res.send(result);

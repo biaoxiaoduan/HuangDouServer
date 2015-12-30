@@ -42,7 +42,8 @@ module.exports = function (router) {
             // We have the data so we can output it to the browser!
             for (var i = 0; i < models.list.length; i++) {
                 var name = models.list[i].name.toLowerCase();
-                if (name.startsWith(searchKey)) {
+                var index = name.indexOf(searchKey);
+                if (index==0) {
                     result.data.list.push({id: models.list[i].id, name: models.list[i].name});
                     result.data.count += 1;
                 }
