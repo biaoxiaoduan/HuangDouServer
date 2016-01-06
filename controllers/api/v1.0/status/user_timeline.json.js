@@ -94,6 +94,9 @@ module.exports = function (router) {
                 };
                 result.data.list.push(item);
             }
+            result.data.min_id = statuses[statuses.length - 1].id;
+            result.data.max_id = statuses[0].id;
+            result.data.count = statuses.length;
             res.send(result);
         }).error(function(error){
             result.success = false;
