@@ -16,92 +16,88 @@ module.exports = function (router) {
         var count = req.query.count;
         var result = {
             success: true,
-            error: '',
+            errorCode: 0,
+            max_id: 0,
+            min_id: 0,
             data:{
-                statuses:[]
+                list:[]
             }
         };
         var Status = Model.Status;
         if (uuid == null) {
             result.success = false;
-            result.error = 'invalid params';
+            result.errorCode = -1;
             res.send(result);
             return;
         }
-        if (count == null || count > 100 || count < 1) {
-            count = 100;
+        if (count == null || count > 20 || count < 1) {
+            count = 20;
         }
-        if (max_id != null && max_id != 0) {
-            Status.findAll({
-                where: Sequelize.and(
-                    {
-                        authorId:uuid
-                    },
-                    {
-                        id:{lte:max_id}
-                    }
-                ),
-                limit: count,
-                order: 'id DESC'
-            }).then(function(statuses){
-                for (var status in statuses) {
-                    var item = {
-                        authorId: status.authorId,
-                        title: status.title,
-                        content: status.content,
-                        images: status.images,
-                        tag: status.tag,
-                        lat: status.lat,
-                        long: status.long
-                    };
-                    result.data.statuses.push(item);
-                }
-                res.send(result);
-            }).error(function(error){
-                result.success = false;
-                res.send(result);
-            });
-        } else {
-            if (since_id != null && since_id != 0) {
-                console.log('use since id ' + since_id);
-                console.log('count is ' + count);
-                Status.findAll({
+        var condition = {};
+        if (max_id != null && max_id >= 0) {
+            if (max_id == 0) {
+                condition = {
+                    where: Sequelize.and(
+                        {
+                            authorId:uuid
+                        }
+                    ),
+                    limit: count,
+                    order: 'id DESC'
+                };
+            } else {
+                condition = {
                     where: Sequelize.and(
                         {
                             authorId:uuid
                         },
                         {
-                            id:{gte:since_id}
+                            id:{lte:max_id}
                         }
                     ),
                     limit: count,
-                    order: 'id ASC'
-                }).then(function(statuses){
-                    console.log(statuses.length);
-                    for (var i = 0; i < statuses.length; i++) {
-                        var item = {
-                            authorId: statuses[i].authorId,
-                            title: statuses[i].title,
-                            content: statuses[i].content,
-                            images: statuses[i].images,
-                            tag: statuses[i].tag,
-                            lat: statuses[i].lat,
-                            long: statuses[i].long
-                        };
-                        console.log(statuses[i]);
-                        result.data.statuses.push(item);
-                    }
-                    res.send(result);
-                }).error(function(error){
-                    result.success = false;
-                    res.send(result);
-                });
-            } else {
-                result.success = false;
-                result.error = 'invalid params';
-                res.send(result);
+                    order: 'id DESC'
+                };
             }
+        } else if (since_id != null && since_id != 0) {
+            condition = {
+                where: Sequelize.and(
+                    {
+                        authorId:uuid
+                    },
+                    {
+                        id:{gte:since_id}
+                    }
+                ),
+                    limit: count,
+                order: 'id DESC'
+            }
+        } else {
+            result.success = false;
+            result.errorCode = -1;
+            res.send(result);
+            return;
         }
-
+        Status.findAll(condition).then(function(statuses){
+            for (var i = 0; i < statuses.length; i++) {
+                var status = statuses[i];
+                var item = {
+                    statusId: status.id,
+                    authorId: status.authorId,
+                    title: status.title,
+                    content: status.content,
+                    images: status.images,
+                    tag: status.tag,
+                    lat: status.lat,
+                    long: status.long,
+                    type: status.type
+                };
+                result.data.list.push(item);
+            }
+            res.send(result);
+        }).error(function(error){
+            result.success = false;
+            res.send(result);
+        });
     });
 };
