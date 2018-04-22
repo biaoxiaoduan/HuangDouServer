@@ -3,13 +3,13 @@
  */
 
 module.exports = function(sequelize, DataTypes) {
-    var Comments = sequelize.define("Comments", {
+    var AfterPS = sequelize.define("AfterPS", {
         id: {type:DataTypes.INTEGER, autoIncrement: true, primaryKey: true},
         authorId: DataTypes.INTEGER,
-        content: DataTypes.STRING,
-        psId: DataTypes.INTEGER,
-        parentId: DataTypes.INTEGER
+        image: DataTypes.STRING,
+        description: DataTypes.STRING,
+        target: DataTypes.INTEGER
     });
 
-    return Comments;
+    return AfterPS;
 };

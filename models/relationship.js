@@ -7,9 +7,8 @@ module.exports = function(sequelize, DataTypes) {
     var Relationship;
     Relationship = sequelize.define("Relationship", {
         relationshipID: {type:DataTypes.INTEGER, primaryKey: true, autoIncrement:true},
-        member1: DataTypes.STRING,
-        member2: DataTypes.STRING,
-        relation: DataTypes.STRING
+        member1: DataTypes.INTEGER,
+        member2: DataTypes.INTEGER
     });
 
     return Relationship;

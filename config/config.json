@@ -70,10 +70,11 @@
 
     },
   "development": {
-    "username": "yanbiao",
-    "password": "dyb123",
+    "username": "root",
+    "password": "dyb1211LSS",
     "database": "huangdou",
-    "host": "rdsz6n6yd92762lr0221o.mysql.rds.aliyuncs.com",
+    "host": "bj-cdb-lr8xqjs3.sql.tencentcdb.com",
+    "port": "63709",
     "dialect": "mysql"
   },
   "test": {
